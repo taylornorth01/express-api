@@ -1,9 +1,14 @@
 import express from 'express';
 import { indexPage, notesPage } from '../controllers';
+import { default as noteRoutes } from './note.route';
 
-const indexRouter = express.Router();
+const router = express.Router();
 
-indexRouter.get('/', indexPage);
-indexRouter.get('/notes', notesPage);
+router.get('/', indexPage);
 
-export default indexRouter;
+/*
+ * Routes passed as an object to the router instance.
+ */
+router.use('/notes', noteRoutes);
+
+export default router;
