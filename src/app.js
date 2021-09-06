@@ -4,14 +4,11 @@ import cookieParser from 'cookie-parser';
 import indexRouter from './routes/index';
 
 /*
- *  Setting up Sequalize with Postgres
+ *  Testing the database connection and creating tables
  */
 
-import { DB_POSTGRES } from './settings';
-import Sequelize from 'sequelize';
-const sequelize = new Sequelize(DB_POSTGRES);
-
-sequelize
+import database from './config/database.config';
+database
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
@@ -19,27 +16,6 @@ sequelize
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
   });
-
-export const Note = sequelize.define('notes', {
-  note: Sequelize.TEXT,
-  tag: Sequelize.STRING
-});
-
-sequelize.sync({ force: true }).then(() => {
-  console.log(`Database & tables created!`);
-
-  Note.bulkCreate([
-    { note: 'pick up some bread after work', tag: 'shopping' },
-    { note: 'remember to write up meeting notes', tag: 'work' },
-    { note: 'learn how to use node orm', tag: 'work' }
-  ])
-    .then(function () {
-      return Note.findAll();
-    })
-    .then(function (notes) {
-      console.log(notes);
-    });
-});
 
 /*
  *  Setting up the Express app
