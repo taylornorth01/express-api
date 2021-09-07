@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  express:
+    image: node:16-alpine3.11
+    build:
+      context: ./.docker
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - '3000:3000'
+    tty: true
+    links:
+      - postgres
+    env_file:
+      - .env
+
+  postgres:
+    image: postgres:alpine3.14
+    environment:
+      POSTGRES_USER: taylor
+      POSTGRES_DB: express
+      POSTGRES_PASSWORD: 2belfast
