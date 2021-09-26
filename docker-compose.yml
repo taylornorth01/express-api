@@ -22,4 +22,4 @@ services:
     environment:
       POSTGRES_USER: taylor
       POSTGRES_DB: express
-      POSTGRES_PASSWORD: 2belfast
+      POSTGRES_PASSWORD: supersecret
